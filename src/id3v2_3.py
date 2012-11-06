@@ -61,11 +61,14 @@ def parsFile(fileName,requiredFrames=__listOfDefFrame):
     описані в RequiredFrames 
     """
     passed = 0  # ксть розібраних байтів
-    with open(fileName,"rb") as f:
-        header = parsHeader(f)
-        while( passed<header["size"] ):
-            passed += parsFrame(f)
-
+    try:
+        with open(fileName,"rb") as f:
+            header = parsHeader(f)
+            while( passed<header["size"] ):
+                passed += parsFrame(f)
+    except:
+        return
+    
     info=compileRecordInfo(f,requiredFrames)
     return info
 
@@ -109,6 +112,7 @@ def compileRecordInfo(file,listOfRequir):
     """
     Збираєму з всіх розібраних фреймів потрібні для нас інформацію
     Отримуємо словник frameId : value
+    @
     """
     dictOfRequir = {}
     for i in range(len(listOfRequir)):
@@ -117,6 +121,8 @@ def compileRecordInfo(file,listOfRequir):
     return dictOfRequir
 
        
-info=parsFile ("NC 2 U.mp3")
+info=parsFile ("C://Users//Wittmann//Documents//GitHub//Course//res//NC 2 U.mp3")
+if (info):
+    print(decodeFrameInfo(info))
 
 
