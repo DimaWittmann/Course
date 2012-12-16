@@ -1,23 +1,19 @@
-import os
+def printInfo(file):
+    import glob, os, time, id3v2_4 as parser
+    info = parser.parseFile(file);
+    (dirName, fileName) = os.path.split(file)
+    metadata = os.stat(file)
+    (name, ext)=os.path.splitext(fileName)
+    print("filename:",name)
+    print("type:", ext[1:])
+    print("size:",  metadata.st_size, "bites")
+    print("Last change ",time.localtime(time.time()).tm_yday-time.localtime(metadata.st_mtime).tm_yday, "day ago" )
 
-listOfFiles=[]
-startDir=os.getcwd()
-def searchFor(root, extension):
-    """
-    Пошук у заданій директорії і підерикторіях файлів
-    із заданим розширенням
-    """
-    listOfFiles=[]
-    os.chdir(root)
-    for file in os.listdir(root):
-        path = os.path.join(root,file)
-        if os.path.isfile(path):
-            if os.path.splitext(file)[1] == extension:
-                listOfFiles.append(path)
-        else:
-            searchFor(path, extension)
-    os.chdir(startDir)
-    return listOfFiles
+    if info.get("TPE1"):
+        print("Solist(s): ",info.get("TPE1"))
+    if info.get("TPE2"):
+        print("Band/orchestra: ",info.get("TPE2"))    
+    if info.get("TIT2"):
+        print("Title/songname: ",info.get("TIT2"))
 
-
-    
+    print (info)
