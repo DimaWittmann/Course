@@ -153,9 +153,8 @@ def parseFile(fileName, requiredFrames=listOfDefFrame, encoding="Latin-1"):
                 passed += parseFrame(f)
     except ValueError:     
         print("File whithout tag")
-        return       
+        return None
 
-    
     info = decodeFrameInfo(compileRecordInfo(requiredFrames), encoding)
     return info
 

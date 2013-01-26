@@ -1,5 +1,5 @@
+import glob, os, time, id3v2_4 as parser
 def printInfo(file):
-    import glob, os, time, id3v2_4 as parser
     info = parser.parseFile(file);
     (dirName, fileName) = os.path.split(file)
     metadata = os.stat(file)
@@ -17,3 +17,8 @@ def printInfo(file):
         print("Title/songname: ",info.get("TIT2"))
 
     print (info)
+
+
+def findFiles(root, patern):
+    files = glob.glob(root)
+    
